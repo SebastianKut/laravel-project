@@ -40,8 +40,17 @@ class PostsController extends Controller
 
         $post = Post::where('slug', $slug)->firstOrFail();
 
-        return view('posts', [
+        return view('post', [
             'post' => $post
+        ]);
+    }
+
+    public function showLatest()
+    {
+        $posts = Post::take(3)->latest()->get();
+
+        return view('posts', [
+            'posts' => $posts
         ]);
     }
 }
