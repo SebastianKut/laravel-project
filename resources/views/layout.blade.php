@@ -9,8 +9,8 @@
     <title>Projection by TEMPLATED</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="assets/css/main.css" />
-    <link rel="stylesheet" href="css/app.css" />
+    <link rel="stylesheet" href="/assets/css/main.css" />
+    <link rel="stylesheet" href="/css/app.css" />
 
 
 
@@ -26,6 +26,7 @@
                 <a href="/">Home</a>
                 <a href="/test">Test</a>
                 <a href="/posts">Posts</a>
+                <a href="/archive">Archive</a>
 
             </nav>
             <a href="#navPanel" class="navPanelToggle"><span class="fa fa-bars"></span></a>

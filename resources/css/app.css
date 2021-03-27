@@ -1,4 +1,11 @@
 .article__top {
     margin-top: 20px !important;
-    color: aqua;
+}
+
+.w-5.h-5 {
+    display: none;
+}
+
+.custom__pagination {
+    justify-content: center;
 }

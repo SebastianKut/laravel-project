@@ -53,4 +53,13 @@ class PostsController extends Controller
             'posts' => $posts
         ]);
     }
+
+    public function index()
+    {
+        $posts = Post::paginate(2);
+
+        return view('archive', [
+            'posts' => $posts
+        ]);
+    }
 }

@@ -55,5 +55,6 @@ Route::get('/test', function () {
 //we put the above callback function inside PostsController method called show
 Route::get('/posts/{post}', 'App\Http\Controllers\PostsController@show');
 
-
 Route::get('/posts', 'App\Http\Controllers\PostsController@showLatest');
+
+Route::get('/archive', 'App\Http\Controllers\PostsController@index');
