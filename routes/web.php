@@ -53,8 +53,17 @@ Route::get('/test', function () {
 
 //Proper way of doing the above using CONTROLER
 //we put the above callback function inside PostsController method called show
-Route::get('/posts/{post}', 'App\Http\Controllers\PostsController@show');
 
 Route::get('/posts', 'App\Http\Controllers\PostsController@showLatest');
+
+Route::post('/posts', 'App\Http\Controllers\PostsController@store');
+
+Route::get('/posts/create', 'App\Http\Controllers\PostsController@create');
+
+Route::put('/posts/{post}', 'App\Http\Controllers\PostsController@update');
+
+Route::get('/posts/{post}', 'App\Http\Controllers\PostsController@show');
+
+Route::get('/posts/{post}/edit', 'App\Http\Controllers\PostsController@edit');
 
 Route::get('/archive', 'App\Http\Controllers\PostsController@index');

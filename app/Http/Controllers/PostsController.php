@@ -26,7 +26,7 @@ use Illuminate\Support\Facades\DB;
 
 class PostsController extends Controller
 {
-    public function show($slug)
+    public function show(Post $post) //the variable passed to the function has to be the same as wildcard defined in the router {post}
     {
         //Get data from mysql database using queries
 
@@ -38,7 +38,12 @@ class PostsController extends Controller
         //OR
         //Using Eloquent and Model
 
-        $post = Post::where('slug', $slug)->firstOrFail();
+        // $post = Post::where('slug', $slug)->firstOrFail();
+
+        // OR
+        // Using built in method passing Post $slug as an argument to the show function this only works for finding by id, if you  want to use slug
+        // you have to overwrite getRouteKeyName method in the Model
+
 
         return view('post', [
             'post' => $post
@@ -56,10 +61,66 @@ class PostsController extends Controller
 
     public function index()
     {
-        $posts = Post::paginate(2);
+        $posts = Post::latest()->paginate(2);
 
         return view('archive', [
             'posts' => $posts
         ]);
+    }
+
+    public function create()
+    {
+        return view('create');
+    }
+
+    public function store()
+    {
+        //validation
+        request()->validate([
+            'slug' => ['required', 'min:3'],
+            'title' => 'required',
+            'body' => 'required',
+        ]);
+
+
+        //One way to get data from request send by our form and persist to database
+        $post = new Post;
+
+        $post->slug = request('slug');
+        $post->title = request('title');
+        $post->body = request('body');
+        $post->save();
+
+        return redirect('/posts/' . $post->slug);
+    }
+
+    //One way to do querries to database writing a query
+    public function edit($slug)
+    {
+
+        $post = Post::where('slug', $slug)->firstOrFail();
+
+        return view('edit', ['post' => $post]);
+    }
+
+
+    //Another way is to use (Post $wildcardName) and then laravel queries db behind the scenes only works by default with id
+    //if using slug or something else have to overwrite getRouteKeyName() in the Model
+    public function update(Post $post)
+    {
+        request()->validate([
+            'slug' => ['required', 'min:3'],
+            'title' => 'required',
+            'body' => 'required',
+        ]);
+
+        // $post = Post::where('slug', $slug)->firstOrFail();
+
+        $post->slug = request('slug');
+        $post->title = request('title');
+        $post->body = request('body');
+        $post->save();
+
+        return redirect('/posts/' . $post->slug);
     }
 }

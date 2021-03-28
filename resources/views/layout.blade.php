@@ -5,17 +5,20 @@
 	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
 -->
 <html>
+
 <head>
     <title>Projection by TEMPLATED</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="/assets/css/main.css" />
     <link rel="stylesheet" href="/css/app.css" />
+    @yield('head')
 
 
 
 
 </head>
+
 <body>
 
     <!-- Header -->
@@ -27,6 +30,7 @@
                 <a href="/test">Test</a>
                 <a href="/posts">Posts</a>
                 <a href="/archive">Archive</a>
+                <a href="/posts/create">Add Post</a>
 
             </nav>
             <a href="#navPanel" class="navPanelToggle"><span class="fa fa-bars"></span></a>
@@ -96,7 +100,8 @@
             </form>
 
             <div class="copyright">
-                &copy; Untitled. Design: <a href="https://templated.co">TEMPLATED</a>. Images: <a href="https://unsplash.com">Unsplash</a>.
+                &copy; Untitled. Design: <a href="https://templated.co">TEMPLATED</a>. Images: <a
+                    href="https://unsplash.com">Unsplash</a>.
             </div>
 
         </div>
@@ -109,4 +114,5 @@
     <script src="assets/js/main.js"></script>
 
 </body>
+
 </html>
