@@ -41,7 +41,7 @@ class PostsController extends Controller
         // $post = Post::where('slug', $slug)->firstOrFail();
 
         // OR
-        // Using built in method passing Post $slug as an argument to the show function this only works for finding by id, if you  want to use slug
+        // Using built in method passing Post $post(this has to be named the same as {wildcard} in the router, in this case $post) as an argument to the show function, this by default finds by id, if you  want to use slug
         // you have to overwrite getRouteKeyName method in the Model
 
 
@@ -84,14 +84,22 @@ class PostsController extends Controller
 
 
         //One way to get data from request send by our form and persist to database
-        $post = new Post;
+        // $post = new Post;
 
-        $post->slug = request('slug');
-        $post->title = request('title');
-        $post->body = request('body');
-        $post->save();
+        // $post->slug = request('slug');
+        // $post->title = request('title');
+        // $post->body = request('body');
+        // $post->save();
 
-        return redirect('/posts/' . $post->slug);
+        // Better way is to use Model::create method from Laravel but you have to define fillable fields in the Model
+        // This assigns attributes and saves it all in one go
+        $post = Post::create([
+            'slug'      => request('slug'),
+            'title'     => request('title'),
+            'body'      => request('body'),
+        ]);
+
+        return redirect('/posts/' . $post['slug']);
     }
 
     //One way to do querries to database writing a query
@@ -106,21 +114,62 @@ class PostsController extends Controller
 
     //Another way is to use (Post $wildcardName) and then laravel queries db behind the scenes only works by default with id
     //if using slug or something else have to overwrite getRouteKeyName() in the Model
-    public function update(Post $post)
+    public function update(Post $post) // -THIS AUTOMATICALLY SEARCHES BEHIND THE SCENES FOR THE RIGHT POST BY {post} WILDCARD WHICH HERE IS A 'slug' field as defined in the route
     {
-        request()->validate([
+        // request()->validate([
+        //     'slug' => ['required', 'min:3'],
+        //     'title' => 'required',
+        //     'body' => 'required',
+        // ]);
+
+        // // $post = Post::where('slug', $slug)->firstOrFail();
+
+        // $post->slug = request('slug');
+        // $post->title = request('title');
+        // $post->body = request('body');
+        // $post->save();
+
+        //  This is how to further clean up the above code
+
+        $validatedAttributes = request()->validate([  // VALUES FROM PUT REQUEST GET VALIDATED AND ASSIGNED TO THE VARIABLE $validatedAttributes 
             'slug' => ['required', 'min:3'],
             'title' => 'required',
             'body' => 'required',
         ]);
 
-        // $post = Post::where('slug', $slug)->firstOrFail();
-
-        $post->slug = request('slug');
-        $post->title = request('title');
-        $post->body = request('body');
-        $post->save();
+        $post->update($validatedAttributes);    //TO UPDATE POST IN THE DATABASE LARAVEL STYLE WE CALL UPDATE METHOD FROM OUR $post (WHICH IS OUR POST FROM DATABASE FOUND BY LARAVEL BEHIND THE SCENES) AND PASS OUR VALIDATED VALUES
 
         return redirect('/posts/' . $post->slug);
     }
+
+    // TO FURTHER ABSTRACT THE ABOVE METHOD WE CAN DO BELOW
+
+    // public function update(Post $post)
+    // {
+    //     $post->update(request()->validate([
+    //         'slug' => ['required', 'min:3'],
+    //         'title' => 'required',
+    //         'body' => 'required',
+    //     ]));
+
+    //     return redirect('/posts/' . $post->slug);
+    // }
+
+    //OR EVEN FURTHER
+
+    // public function update(Post $post)
+    // {
+    //     $post->update($this->validatePost());
+
+    //     return redirect('/posts/' . $post->slug);
+    // };
+
+    // protected function validatePost() 
+    // {
+    //      return request()->validate([
+    //         'slug' => ['required', 'min:3'],
+    //         'title' => 'required',
+    //         'body' => 'required',
+    //     ]);
+    // };
 }
