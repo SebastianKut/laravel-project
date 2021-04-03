@@ -44,6 +44,6 @@ class User extends Authenticatable
     // CREATE RELATIONSHIP BETWEEN USER AND HIS POSTS
     public function posts()
     {
-        return $this->hasMany(Post::class);
+        return $this->hasMany(Post::class);  //hasMany not belongsToMany because user Tble has no foreign key post_id
     }
 }

@@ -20,6 +20,10 @@
     </div>
 </section>
 
-{{$posts->links()}}
+{{-- check if method links() exists - depends on if statement in PostController@index method. If returned as pagination it will if its just normal collection it wont--}}
+@if(method_exists($posts, 'links'))
+{{ $posts->links() }}
+@endif
+
 
 @endsection

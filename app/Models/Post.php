@@ -27,6 +27,10 @@ class Post extends Model
     // belongsTo
     // belongsToMany
 
+    // belongsTo and belongsToMany - you're telling Laravel that this table holds the foreign key that connects it to the other table.
+
+    // hasOne and hasMany - you're telling Laravel that this table does not have the foreign key. (User hasMany Posts - because user doesnt have post_id)
+
     public function user()
     {
         return $this->belongsTo(User::class);
