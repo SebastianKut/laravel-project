@@ -34,4 +34,11 @@ class Post extends Model
 
     // Now that we defined user method the example query 'find post with id=5 and show his author (or user in this case)' would look like this
     // Post::find(5)->user
+
+
+    //Many to many relationship (many tags can belong to many articles and vice versa) - requires Tag table and linking table(pivot table) article_tag with relationship of tags and articles
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
+    }
 }

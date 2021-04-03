@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -61,7 +62,14 @@ class PostsController extends Controller
 
     public function index()
     {
-        $posts = Post::latest()->paginate(2);
+
+        //if theres a tag query in the request show only those articles with the tag else show all
+
+        if (request('tag')) {
+            $posts = Tag::where('name', request('tag'))->firstOrFail()->posts;
+        } else {
+            $posts = Post::latest()->paginate(2);
+        }
 
         return view('archive', [
             'posts' => $posts
