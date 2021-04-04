@@ -27,6 +27,19 @@
             <p>{{$errors->first('body')}}</p>
             @enderror
         </div>
+        <div class="field half">
+            <label for="tags">Tags</label>
+            {{-- name="tags[]" means that on submit we will pass an array of selected values, if it was name="tags" then we would only pass one --}}
+            <select multiple name="tags[]">
+                @foreach ($tags as $tag )
+                <option value={{$tag->id}}>{{$tag->name}}</option>
+                @endforeach
+            </select>
+            @error('tags')
+            {{-- another way to dispaly error message --}}
+            <p>{{$message}}</p>
+            @enderror
+        </div>
         <ul class="actions">
             <li><input value="Create Post" class="button alt" type="submit"></li>
         </ul>

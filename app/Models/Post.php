@@ -19,7 +19,7 @@ class Post extends Model
 
     // protected $guarded = [];
 
-    protected $fillable = ['slug', 'title', 'body'];
+    protected $fillable = ['slug', 'title', 'body', 'user_id'];
 
     // Database tables main relationships
     // hasOne

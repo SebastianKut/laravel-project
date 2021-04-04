@@ -78,7 +78,9 @@ class PostsController extends Controller
 
     public function create()
     {
-        return view('create');
+        $tags = Tag::all();
+
+        return view('create', ['tags' => $tags]);
     }
 
     public function store()
@@ -88,6 +90,8 @@ class PostsController extends Controller
             'slug' => ['required', 'min:3'],
             'title' => 'required',
             'body' => 'required',
+            // the below means that each tags id (that we passing in array) exists in tags table 
+            'tags' => 'exists:tags,id'
         ]);
 
 
@@ -105,7 +109,12 @@ class PostsController extends Controller
             'slug'      => request('slug'),
             'title'     => request('title'),
             'body'      => request('body'),
+            // hardcoded user id for now
+            'user_id'   => 2,
         ]);
+
+        // attach method attaches tags to post via linking table
+        $post->tags()->attach(request('tags'));
 
         return redirect('/posts/' . $post['slug']);
     }
