@@ -67,3 +67,9 @@ Route::get('/posts/{post}', 'App\Http\Controllers\PostsController@show');
 Route::get('/posts/{post}/edit', 'App\Http\Controllers\PostsController@edit');
 
 Route::get('/archive', 'App\Http\Controllers\PostsController@index');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::post('/contact', 'App\Http\Controllers\ContactController@store');

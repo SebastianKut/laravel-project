@@ -5,7 +5,7 @@
 <section id="three" class="wrapper align-center">
     <div class="inner">
         <div class="flex flex-2">
-            @foreach($posts as $post)
+            @forelse ($posts as $post)
             <article>
                 <header>
                     <h3>{{$post->title}}</h3>
@@ -15,7 +15,11 @@
                     <a href="/posts/{{$post->slug}}" class="button">Learn More</a>
                 </footer>
             </article>
-            @endforeach
+            @empty
+            <p>There are no articles yet</p>
+            @endforelse
+
+
         </div>
     </div>
 </section>
